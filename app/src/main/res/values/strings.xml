@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">RoadTrip</string>
+    <string name="departure_location">Where are you departing?</string>
+    <string name="departure_time">When are you departing?</string>
+    <string name="arrival_location">Where are you arriving?</string>
+    <string name="arrival_time">When are you arriving?</string>
+    <string name="button_generate">Generate Road Trip</string>
+    <string name="button_back">Go Back</string>
+    <string name="button_act">Activities</string>
+    <string name="button_map">Display Map</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
