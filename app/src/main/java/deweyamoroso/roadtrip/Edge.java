@@ -43,7 +43,7 @@ public class Edge {
     }
 
     //Returns neighbor node. Only called from traversal.djikstra. Returns error if node provided is not a member of the edge. -T
-    public Node getNeighbor(Node n){
+    /*public Node getNeighbor(Node n){
         Node ret = new Node(0, 0);
     if ((node_A.getLongitude() != n.getLongitude()) && (node_B.getLongitude() != n.getLongitude())){
         System.out.println("ERROR: edge.getNeighbor, incorrect input");
@@ -55,7 +55,7 @@ public class Edge {
          ret = node_B;
     }
         return ret;
-    }
+    }*/
    
    //For testing
    public String toString(){

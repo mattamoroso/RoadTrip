@@ -44,7 +44,7 @@ public class Traversal {
                 for (int i = 0; i < edgenumber; i++) { //Loops through each edge of the Node.
                     tempedge = tempNode.getEdge(i);
                     tempedgelength = tempedge.getDistance();
-                    neighbor = tempedge.getNeighbor(tempNode);
+                   // neighbor = tempedge.getNeighbor(tempNode);
                     int flag = 0;
                     for (int z = 0; z < S.length; z++) { //This loop checks whether the edge being evaluated connects to another member of S.
                         if (neighbor == S[z]) {

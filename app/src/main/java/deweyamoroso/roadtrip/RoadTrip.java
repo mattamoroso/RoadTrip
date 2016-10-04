@@ -14,13 +14,13 @@ public class RoadTrip {
     /**
      * @param args the command line arguments
      */
-    public static String initialize() {
+   /* public static String initialize() {
         Node n = new Node(1, 2);
         Node n2 = new Node(5, 6);
         Edge e = new Edge(n, n2, 10);
         String s1 = e.toString();
 		return s1;
-    }
+    } */
     
 }
 
