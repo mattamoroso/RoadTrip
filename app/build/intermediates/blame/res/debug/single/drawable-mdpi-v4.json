@@ -248,12 +248,12 @@
         "source": "D:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast\\9.4.0\\res\\drawable-mdpi-v4\\cast_ic_notification_1.png"
     },
     {
-        "merged": "D:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\quantum_ic_pause_circle_filled_grey600_36.png",
-        "source": "D:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast-framework\\9.4.0\\res\\drawable-mdpi-v4\\quantum_ic_pause_circle_filled_grey600_36.png"
-    },
-    {
         "merged": "D:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\common_google_signin_btn_icon_light_focused.9.png",
         "source": "D:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\9.4.0\\res\\drawable-mdpi-v4\\common_google_signin_btn_icon_light_focused.9.png"
+    },
+    {
+        "merged": "D:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\quantum_ic_pause_circle_filled_grey600_36.png",
+        "source": "D:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast-framework\\9.4.0\\res\\drawable-mdpi-v4\\quantum_ic_pause_circle_filled_grey600_36.png"
     },
     {
         "merged": "D:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\common_full_open_on_phone.png",
