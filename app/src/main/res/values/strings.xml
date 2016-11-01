@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">RoadTrip</string>
-    <string name="departure_location">Where are you departing?</string>
-    <string name="departure_time">When are you departing?</string>
-    <string name="arrival_location">Where are you arriving?</string>
-    <string name="arrival_time">When are you arriving?</string>
+    <string name="app_name">Strider</string>
+    <string name="departure_location">Departure Location? E.G. 5 Main Street, Boston, MA</string>
+    <string name="departure_date">Date of Departure? E.G. 10/20/2016</string>
+    <string name="departure_time">Time of Departure? E.G. 9:30, or 14:15</string>
+    <string name="arrival_location">Arrival Location?</string>
+    <string name="arrival_date">Date of Arrival?</string>
+    <string name="arrival_time">Time of Arrival?</string>
     <string name="button_generate">Generate Road Trip</string>
     <string name="button_back">Go Back</string>
     <string name="button_act">Activities</string>

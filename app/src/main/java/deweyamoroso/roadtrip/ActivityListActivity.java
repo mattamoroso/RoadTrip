@@ -39,7 +39,6 @@ public class ActivityListActivity extends AppCompatActivity {
     }
 
 
-//Hey Matt this was just what I was starting to mess with using AsyncTask before you arrived. -T
 
 
     private class MyAsyncTask extends AsyncTask<String, String, String> {

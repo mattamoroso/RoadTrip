@@ -482,8 +482,8 @@ public final class R {
 		public static final int cast_forward_10 = 0x7f07001a;
 		public static final int cast_forward_30 = 0x7f07001b;
 		public static final int cast_intro_overlay_button_text = 0x7f07001c;
-		public static final int cast_invalid_stream_duration_text = 0x7f07006d;
-		public static final int cast_invalid_stream_position_text = 0x7f07006e;
+		public static final int cast_invalid_stream_duration_text = 0x7f07006e;
+		public static final int cast_invalid_stream_position_text = 0x7f07006f;
 		public static final int cast_mute = 0x7f07001d;
 		public static final int cast_notification_connected_message = 0x7f07001e;
 		public static final int cast_notification_connecting_message = 0x7f07001f;
@@ -528,16 +528,16 @@ public final class R {
 		public static final int common_open_on_phone = 0x7f070046;
 		public static final int common_signin_button_text = 0x7f070047;
 		public static final int common_signin_button_text_long = 0x7f070048;
-		public static final int create_calendar_message = 0x7f07006f;
-		public static final int create_calendar_title = 0x7f070070;
-		public static final int decline = 0x7f070071;
+		public static final int create_calendar_message = 0x7f070070;
+		public static final int create_calendar_title = 0x7f070071;
+		public static final int decline = 0x7f070072;
 		public static final int place_autocomplete_clear_button = 0x7f070054;
 		public static final int place_autocomplete_search_hint = 0x7f070055;
-		public static final int store_picture_message = 0x7f070075;
-		public static final int store_picture_title = 0x7f070076;
-		public static final int tagmanager_preview_dialog_button = 0x7f070077;
-		public static final int tagmanager_preview_dialog_message = 0x7f070078;
-		public static final int tagmanager_preview_dialog_title = 0x7f070079;
+		public static final int store_picture_message = 0x7f070077;
+		public static final int store_picture_title = 0x7f070078;
+		public static final int tagmanager_preview_dialog_button = 0x7f070079;
+		public static final int tagmanager_preview_dialog_message = 0x7f07007a;
+		public static final int tagmanager_preview_dialog_title = 0x7f07007b;
 		public static final int wallet_buy_button_place_holder = 0x7f070058;
 	}
 	public static final class style {

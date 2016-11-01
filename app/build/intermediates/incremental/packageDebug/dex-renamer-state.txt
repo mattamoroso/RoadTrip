@@ -1,0 +1,7 @@
+#Tue Nov 01 11:39:13 EDT 2016
+base.0=D\:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_72a8e99b625b1088ebff8ea8e24f91c66cfce2e6
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=D\:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_1df19d9206543281ac18b48642d70159c3aebf15\\classes.dex
+base.1=D\:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_1df19d9206543281ac18b48642d70159c3aebf15
+file.0=D\:\\ProgramFiles\\Android\\AndroidStudioProjects\\RoadTrip\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_72a8e99b625b1088ebff8ea8e24f91c66cfce2e6\\classes.dex

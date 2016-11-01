@@ -34,6 +34,8 @@ public class Node {
     private double longitude;
     private double latitude;
     private String name;
+    private String address;
+
 
 
     //filled in by djikstra's method in traversal
@@ -51,10 +53,11 @@ public class Node {
     private Utility utility;
     
     //node constructor
-    public Node(String name, double latitude, double longitude){
+    public Node(String name, String address, double latitude, double longitude){
         this.longitude = longitude;
         this.latitude = latitude;
         this.name = name;
+        this.address = address;
     }
     
     //called by traversal.djikstras to set shortest distance from source node to relevant node. -T
@@ -100,6 +103,14 @@ public class Node {
     
     //latitude getter
     public double getLatitude(){return latitude;}
+
+    //name getter
+    public String getName(){
+        return name;
+    }
+
+    //address getter
+    public String getAddress(){return address;}
     
     //utility getter -T
     public int getUtility(){
