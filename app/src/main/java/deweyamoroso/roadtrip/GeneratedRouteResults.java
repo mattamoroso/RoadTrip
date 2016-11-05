@@ -27,15 +27,17 @@ public class GeneratedRouteResults extends AppCompatActivity {
         int k = 0;
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i<nodearray.length; i++){
-            String[] locations = new String[nodearray.length / 2];
+            String[] locations = new String[nodearray.length / 3];
             sb.append(nodearray[i] + "\n");
             sb.append(nodearray[i+1] + "\n");
-            sb.append("\n");
             locations[k] = nodearray[i+2];
             k++;
             locations[k] = nodearray[i+3];
             k++;
-            i = i + 3;
+            sb.append(nodearray[i+4] + "\n");
+            sb.append(nodearray[i+5] + "\n");
+            sb.append("\n");
+            i = i + 5;
 
         }
         String route_output = sb.toString();

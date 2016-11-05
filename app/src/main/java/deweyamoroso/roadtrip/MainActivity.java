@@ -8,21 +8,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.os.AsyncTask;
-
-import com.google.android.gms.location.places.Places;
+import android.location.Location;
 
 import java.io.*;
 import java.lang.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Random;
+
+//USED FOR IMPLEMENTING TIME
+import java.util.Date; //used to store time and date input in special "date" object format.
+import java.text.SimpleDateFormat; //used to set the format for information being turned into a date object
+import java.util.Calendar; //used to convert a "date" object into a "calendar" object, which is more flexible. Calendar objects can have time "added" to them so we can keep track of time as the algorithm runs.
+import java.util.concurrent.TimeUnit; //used for finding the "difference" in minutes between two dates (departure and arrival)
+
+
+//import com.google.android.gms.location.places.Places;
 //import java.io.BufferedReader;
 //import java.io.IOException;
 //import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.Random;
+//import java.util.ArrayList;
+//import java.util.Iterator;
 
 //import com.google.android.gms.common.api.GoogleApiClient;
 //import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
@@ -41,8 +49,12 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     List<Node> nodelist = new LinkedList(); //Initialize linked list of nodes, I.E. our route.
     String activity_types[] = {"amusement_park", "aquarium", "art_gallery", "bakery", "bar", "book_store", "bowling_alley", "cafe", "campground", "casino", "cemetery", "clothing_store", "department_store", "electronics_store", "jewelry_store", "library", "liquor_store", "lodging", "meal_delivery", "meal_takeaway", "movie_theater", "movie_rental", "museum", "night_club", "park", "restaurant", "shopping_mall", "spa", "store", "zoo"};
+    int activity_time[] = {360, 240, 180, 30, 120, 30, 180, 60, 720, 240, 45, 30, 120, 30, 30, 60, 20, 720, 60, 60, 150, 20, 180, 180, 45, 90, 180, 180, 30, 240};
     int tmpflag = 0; //TESTING VALUE TO LIMIT NUMBER OF TIME ASYNCTASK LOOPS, REMOVE LATER ONCE PROPER IF CASE IS MADE
-    String[]nodearray;
+    long time_remaining;
+    Calendar current_time = Calendar.getInstance();
+    Node arrival;
+    int rnd;
 
     //Oncreate function initializes page and links to xml file.
     @Override
@@ -53,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Called when the user clicks the Generate Roadtrip button */
-    public void GenerateRoute(View view) {
+    public void GenerateRoute(View view) throws Exception {
 
         //initializing EditText variables and linking them to EditText sections of xml file. Note: EditText creates space for user input.
         EditText dl = (EditText) findViewById(R.id.departure_location);
@@ -70,6 +82,25 @@ public class MainActivity extends AppCompatActivity {
         String arrival_location = al.getText().toString();
         String arrival_date = ad.getText().toString();
         String arrival_time = at.getText().toString();
+
+        //Taking the date and time info from user input and creating Date objects.
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        String datetemp = ""+ departure_date +" "+ departure_time + ":00";
+        Date departure = new Date();
+        departure = format.parse(datetemp);
+
+        datetemp = ""+ arrival_date +" "+ arrival_time + ":00";
+        Date arrival = new Date();
+        arrival = format.parse(datetemp);
+
+        long duration = arrival.getTime() - departure.getTime(); //finds duration between dates/times in milliseconds
+
+        //This is where timeunit utility is used. Converts previous calculation into minutes.
+        //This is used to decide when to end the loop.
+        time_remaining = TimeUnit.MILLISECONDS.toMinutes(duration);
+
+        //This is where current time is initialized from the departure date. The calendar object let us "add" time to it to keep track of the day/hour.
+        current_time.setTime(departure);
 
         //Calls initialize method which starts node creation and the asynctask loop, eventually loading the GeneratedRouteResults page.
         initialize(departure_location, arrival_location);
@@ -93,13 +124,29 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Node departure = new Node( "Departure Location",departure1, lattemp, lontemp); //Create new node from departure information provided by user.
+        String lat = Double.toString(lattemp);
+        String lon = Double.toString(lontemp);
+
+        Date datetemp = current_time.getTime();
+        String time_arrived = datetemp.toString();
+        Node departure = new Node( "Departure Location",departure1, lattemp, lontemp, time_arrived, time_arrived); //Create new node from departure information provided by user.
         nodelist.add(departure); //our departure node is the first node added to the list
+
+        try {
+            Geocoder g;
+            g = new Geocoder(this);
+            List<Address> addressList = g.getFromLocationName(arrival1, 1);
+            lattemp = (addressList.get(0).getLatitude());
+            lontemp = (addressList.get(0).getLongitude());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        arrival = new Node ( "Destination",arrival1, lattemp, lontemp, time_arrived, time_arrived);
 
         //latitude and logitude cast as strings to be supplied to asynctask
         String radius = "50000"; //Highest possible radius. 50,000m or approx. 31 miles. Later on this might be a function of distance between departure and arrival.
-        String lat = Double.toString(lattemp);
-        String lon = Double.toString(lontemp);
 
         //async task arguments stored as array because you are not allowed to supply multiple args to it
         String[]TaskParameters = new String[3]; //initializing and filling array of doubles to be sent to request
@@ -135,12 +182,29 @@ public class MainActivity extends AppCompatActivity {
                 //myUrl+="&type=restaurant&name=cafe&key=AIzaSyBDOGDt8l-1_ON-1xCQIUwakCWOtqynrEM"; //example can include name, might be good for finding restaurant type for example
                 myUrl+="&type=";
                 //activity type is chosen arbitrarily right now
-                int rnd = new Random().nextInt(activity_types.length);
+                rnd = new Random().nextInt(activity_types.length);
                 myUrl+= activity_types[rnd];
                 myUrl+="&key=AIzaSyBDOGDt8l-1_ON-1xCQIUwakCWOtqynrEM";
 
 
                 results = j.doHttpUrlConnectionAction(myUrl); //calls method to make request itself
+
+                if (results.contains("\"status\" : \"ZERO_RESULTS\"")){ //Basically if the url request can't find anything, the URL is rebuilt with a new type and tries again.
+                    myUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
+                    myUrl+=TaskParameters[0][0];
+                    myUrl+=",";
+                    myUrl+=TaskParameters[0][1];
+                    myUrl+="&radius=";
+                    myUrl+=TaskParameters[0][2];
+                    //myUrl+="&type=restaurant&name=cafe&key=AIzaSyBDOGDt8l-1_ON-1xCQIUwakCWOtqynrEM"; //example can include name, might be good for finding restaurant type for example
+                    myUrl+="&type=";
+                    //activity type is chosen arbitrarily right now
+                    rnd = new Random().nextInt(activity_types.length);
+                    myUrl+= activity_types[rnd];
+                    myUrl+="&key=AIzaSyBDOGDt8l-1_ON-1xCQIUwakCWOtqynrEM";
+
+                    results = j.doHttpUrlConnectionAction(myUrl); //calls method to make request itself
+                }
 
             }
             catch (Exception e)
@@ -180,7 +244,30 @@ public class MainActivity extends AppCompatActivity {
             jsonresults[0] = jsonresults[0].substring(23, (jsonresults[0].length() - 1));
             jsonresults[1] = jsonresults[1].substring(23, jsonresults[1].length());
             //Node is created with the collected information, a new node is created, and then added to the node linked list.
-            Node next = new Node(jsonresults[name] ,jsonresults[address], Double.parseDouble(jsonresults[0]), Double.parseDouble(jsonresults[1]));
+
+            //adjusting current time by distance driven to get time arrived
+            Node temp = nodelist.get(nodelist.size() - 1); //Gets last added node.
+            //Following code chunk calculates number of miles between previous location and new location. NOTE: COULD PROBABLY BE MADE INTO A METHOD
+            Location A = new Location("");
+            A.setLatitude(temp.getLatitude());
+            A.setLongitude(temp.getLongitude());
+            Location B = new Location("");
+            B.setLatitude(Double.parseDouble(jsonresults[0]));
+            B.setLongitude(Double.parseDouble(jsonresults[1]));
+            double distance = A.distanceTo(B);
+            distance = (distance / 1609.34) * 2; //The 2 is an decent approximation from miles to minutes of travel for the distances we are dealing with.
+            int distint = (int) distance; //number of minutes of travel
+
+            current_time.add(Calendar.MINUTE, (distint)); //these minutes of driving are added to current_time
+            Date datetemp = current_time.getTime();
+            String time_arrived = datetemp.toString();
+
+            //adjusting current time by time spent at activity to get time left
+            current_time.add(Calendar.MINUTE, (activity_time[rnd]));
+            datetemp = current_time.getTime();
+            String time_left = datetemp.toString();
+
+            Node next = new Node(jsonresults[name] ,jsonresults[address], Double.parseDouble(jsonresults[0]), Double.parseDouble(jsonresults[1]), time_arrived, time_left);
             nodelist.add(next);
             //Temp value to just arbitrarily stop this loop after a chosen number of iterations.
             tmpflag++;
@@ -201,10 +288,10 @@ if(tmpflag <= 5){
 
 //This condition is when we have made it to the final node and need to prepare the nodelist to be sent to generated route results.
 else{
-    nodearray = new String[nodelist.size() * 4];
+    String[] nodearray = new String[nodelist.size() * 6];
     int k = 0;
     for(int i = 0; i < nodelist.size(); i++ ){
-        Node temp = nodelist.get(i);
+        temp = nodelist.get(i);
         nodearray[k] = temp.getName();
         k++;
         nodearray[k] = temp.getAddress();
@@ -212,6 +299,10 @@ else{
         nodearray[k] = Double.toString(temp.getLatitude());
         k++;
         nodearray[k] = Double.toString(temp.getLongitude());
+        k++;
+        nodearray[k] = temp.getTime_Arrived();
+        k++;
+        nodearray[k] = temp.getTime_Left();
         k++;
     }
 
@@ -269,9 +360,9 @@ else{
                 String line = null;
                 while ((line = reader.readLine()) != null)
                 {
-                    //System.out.println(line); //printed to logcat for debugging purposes
+                    System.out.println(line); //printed to logcat for debugging purposes
                     //JSON response trimmed to only include relevant info.
-                    if(line.contains("\"name\"") || line.contains("\"price_level\"") || line.contains("\"rating\"") || line.contains("\"vicinity\"") || line.contains("\"lat\"") || line.contains("\"lng\"")){
+                    if(line.contains("\"name\"") || line.contains("\"price_level\"") || line.contains("\"rating\"") || line.contains("\"vicinity\"") || line.contains("\"lat\"") || line.contains("\"lng\"") || line.contains("\"status\" : \"ZERO_RESULTS\"")){
                     stringBuilder.append(line + "\n"); }
                 }
                 return stringBuilder.toString();

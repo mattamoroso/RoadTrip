@@ -5,54 +5,64 @@
     density="xxxhdpi"
     format="8"
     plugin-version="2.2.2"
-    timestamp="10979556298637"
-    token="2712713584125875942"
-    verifier="COMPATIBLE" >
+    timestamp="16837588456754"
+    token="2712713584125875942" >
 
     <task
         name="javac"
-        duration="147" />
+        duration="0" />
     <task
         name="instant-run-dex"
-        duration="424" />
+        duration="0" />
     <task
         name="instant-run-transform"
-        duration="27" />
+        duration="0" />
     <task
         name="verifier"
-        duration="1" />
-
-    <artifact
-        location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\intermediates\reload-dex\debug\classes.dex"
-        type="RELOAD_DEX" />
+        duration="0" />
 
     <build
-        timestamp="10654145398526"
+        timestamp="15959641985404"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
     </build>
     <build
-        timestamp="10851539748912"
+        timestamp="16171834333532"
         verifier="COMPATIBLE" >
         <artifact
-            location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\intermediates\builds\debug\10851539748912\classes.dex"
+            location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\intermediates\builds\debug\16171834333532\classes.dex"
             type="RELOAD_DEX" />
     </build>
     <build
-        timestamp="10919650615514"
+        timestamp="16429769508741"
         verifier="COMPATIBLE" >
         <artifact
-            location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\intermediates\builds\debug\10919650615514\classes.dex"
+            location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\intermediates\builds\debug\16429769508741\classes.dex"
             type="RELOAD_DEX" />
     </build>
     <build
-        timestamp="10979556298637"
+        timestamp="16571638798950"
         verifier="COMPATIBLE" >
         <artifact
-            location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\intermediates\reload-dex\debug\classes.dex"
+            location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\intermediates\builds\debug\16571638798950\classes.dex"
             type="RELOAD_DEX" />
     </build>
+    <build
+        timestamp="16739604979322"
+        verifier="COMPATIBLE" >
+        <artifact
+            location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\intermediates\builds\debug\16739604979322\classes.dex"
+            type="RELOAD_DEX" />
+    </build>
+    <build
+        timestamp="16828468586509"
+        verifier="COMPATIBLE" >
+        <artifact
+            location="D:\ProgramFiles\Android\AndroidStudioProjects\RoadTrip\app\build\intermediates\builds\debug\16828468586509\classes.dex"
+            type="RELOAD_DEX" />
+    </build>
+    <build timestamp="16837588456754" />
 
 </instant-run>

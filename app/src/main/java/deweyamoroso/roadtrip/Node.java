@@ -35,7 +35,8 @@ public class Node {
     private double latitude;
     private String name;
     private String address;
-
+    private String time_arrived;
+    private String time_left;
 
 
     //filled in by djikstra's method in traversal
@@ -53,11 +54,13 @@ public class Node {
     private Utility utility;
     
     //node constructor
-    public Node(String name, String address, double latitude, double longitude){
+    public Node(String name, String address, double latitude, double longitude, String time_arrived, String time_left){
         this.longitude = longitude;
         this.latitude = latitude;
         this.name = name;
         this.address = address;
+        this.time_arrived = time_arrived;
+        this.time_left = time_left;
     }
     
     //called by traversal.djikstras to set shortest distance from source node to relevant node. -T
@@ -111,24 +114,20 @@ public class Node {
 
     //address getter
     public String getAddress(){return address;}
+
+    //time_arrived getter
+    public String getTime_Arrived(){
+        return time_arrived;
+    }
+
+    //time_left getter
+    public String getTime_Left(){
+        return time_left;
+    }
     
     //utility getter -T
     public int getUtility(){
         return utility.calcUtility();
     }
-
-   // public List<Address> setCoordinates(String name) {
-
-
-   // }
-    
-    //For testing
-    public String toString(){
-        String s = "";
-        s += "long : " + longitude + " ";
-        s += "lat : " + latitude + "\n";
-        return s;
-    }
-    
     
 }
