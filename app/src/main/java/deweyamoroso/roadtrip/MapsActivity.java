@@ -1,13 +1,9 @@
 package deweyamoroso.roadtrip;
 
-import android.content.Intent;
-
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.android.gms.fitness.request.ListClaimedBleDevicesRequest;
-//import com.google.android.gms.identity.intents.Address;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,16 +11,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.location.Geocoder;
-import android.location.Address;
-import android.location.Location;
 import java.util.List;
-import android.widget.TextView;
 
+import com.google.android.gms.maps.model.*;
+import android.graphics.Color;
 
-
-import java.io.IOException;
-
+/**
+ * @author Tobin Dewey <deweyt16@gmail.com>
+ * @version 1.0
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
 
     //initializes map to be displayed
@@ -37,7 +32,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private GoogleMap mMap;
-    private double lat, lon, lat2, lon2;
+    String[] locations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,60 +46,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         Bundle extras = getIntent().getExtras();
-        String message1 = extras.getString("EXTRA_MESSAGE1");
-        String message2 = extras.getString("EXTRA_MESSAGE3");
-
-        //Meat of activity. Uses geocoder object to obtain lats and longs from location addresses.
-        try {
-        Geocoder g;
-        g = new Geocoder(this);
-        List<Address> addressList = g.getFromLocationName(message1, 1);
-        lat = (addressList.get(0).getLatitude());
-        lon = (addressList.get(0).getLongitude());
-
-            List<Address> addressList2 = g.getFromLocationName(message2, 1);
-            lat2 = (addressList2.get(0).getLatitude());
-            lon2 = (addressList2.get(0).getLongitude());
-
-
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-
-//TEST CODE; WRITTEN HERE JUST FOR EASY ACCESS TO LATS AND LONGS
-        // TEST CODE WHICH ESTIMATES DISTANCE BETWEEN TWO SETS OF LATS AND LONGS
-Location departure = new Location("");
-        departure.setLatitude(lat);
-        departure.setLongitude(lon);
-        Location arrival = new Location("");
-        arrival.setLatitude(lat2);
-        arrival.setLongitude(lon2);
-        double distance = departure.distanceTo(arrival);
-        distance = (distance / 1609.34);
-        String distance1 = "DISTANCE IN MILES:"+distance+"";
-        TextView layout = (TextView) findViewById(R.id.distance);
-        layout.setText(distance1);
-
+        locations = extras.getStringArray("EXTRA_MESSAGE1");
+        for(int i = 0; i < locations.length; i++){System.out.println(locations[i]);}
 
     }
     //Simple method when clicking Go Back button. This ends the current activity and displays previous activity.
     //Note: Previous activity is still stored within memory so doing this does NOT cause results to be recalculated. (as far as I know)
+    ///JAVADOC HERE///
     public void GoBack(View view){
+        setContentView(R.layout.activity_generated_route_results);
         finish();
     }
-
-    //Method for loading activity page. Only exists for testing/figuring out url requests. Sends along lat/long to be possibly used as inputs for url.
-    public void Activities(View view){
-
-
-        Intent intent = new Intent(this, ActivityListActivity.class);
-        intent.putExtra("EXTRA_MESSAGE_LAT", lat);
-        intent.putExtra("EXTRA_MESSAGE_LON", lon);
-        startActivity(intent);
-
-
-    }
-
 
     /**
      * Manipulates the map once available.
@@ -116,14 +68,20 @@ Location departure = new Location("");
      * installed Google Play services and returned to the app.
      */
     @Override
+    ///JAVADOC HERE///
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in the two locations and move the camera
-        LatLng departure = new LatLng(lat, lon);
-        mMap.addMarker(new MarkerOptions().position(departure).title("Marker at Departure"));
-        LatLng arrival = new LatLng(lat2, lon2);
-        mMap.addMarker(new MarkerOptions().position(arrival).title("Marker at Arrival"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(departure));
+        Polyline route = mMap.addPolyline(new PolylineOptions()
+                .width(8)
+                .color(Color.BLUE));
+        List<LatLng> points  = route.getPoints();
+        for(int i = 0; i < locations.length; i++){
+            LatLng nodelocation = new LatLng(Double.parseDouble(locations[i]), Double.parseDouble(locations[i+1]));
+            mMap.addMarker(new MarkerOptions().position(nodelocation));
+            points.add(nodelocation);
+            if(i == 0){mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nodelocation, 14.0f));}
+            i++;
+        }
+        route.setPoints(points);
     }
 }

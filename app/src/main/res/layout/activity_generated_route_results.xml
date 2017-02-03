@@ -9,7 +9,7 @@
         android:layout_weight="60"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:maxLines = "1000"
+        android:maxLines = "5000"
         android:scrollbars = "vertical"/>
     <Button
         android:layout_weight="1"
@@ -17,5 +17,11 @@
         android:layout_height="wrap_content"
         android:text="@string/button_map"
         android:onClick="MapView" />
+    <Button
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_back2"
+        android:onClick="GoBack2" />
 
 </LinearLayout>

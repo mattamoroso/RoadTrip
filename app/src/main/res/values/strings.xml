@@ -8,6 +8,8 @@
     <string name="arrival_time">Time of Arrival?</string>
     <string name="button_generate">Generate Road Trip</string>
     <string name="button_back">Go Back</string>
+    <string name="button_back2">Go Back</string>
+    <string name="button_reset">Reset</string>
     <string name="button_act">Activities</string>
     <string name="button_map">Display Map</string>
     <string name="title_activity_maps">Map</string>

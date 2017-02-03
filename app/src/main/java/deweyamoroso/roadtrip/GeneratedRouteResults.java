@@ -7,11 +7,17 @@ import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 import android.view.View;
 
+/**
+ * @author Tobin Dewey <deweyt16@gmail.com>
+ * @version 1.0
+ */
 public class GeneratedRouteResults extends AppCompatActivity {
+    String[] locations;
 
     //onCreate method initializes activity and links to xml file.
     //WIP: Eventually only extra will be array/list of nodes.
     @Override
+    ///JAVADOC HERE///
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generated_route_results);
@@ -21,37 +27,62 @@ public class GeneratedRouteResults extends AppCompatActivity {
         //Strings taken individually from bundle by ID and cast into String objects using getString method.
         String[] nodearray = extras.getStringArray("EXTRA_MESSAGE");
 
-        //for(int i =0; i< nodearray.length; i++){System.out.println(nodearray[i]);} //for debugging purposes
-
+        for(int i =0; i< nodearray.length; i++){System.out.println(nodearray[i]);} //for debugging purposes
+        System.out.println();
         //builds string to display on screen from elements of nodearray, lats and longs stored separately to be passed to map
         int k = 0;
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i<nodearray.length; i++){
-            String[] locations = new String[nodearray.length / 3];
-            sb.append(nodearray[i] + "\n");
-            sb.append(nodearray[i+1] + "\n");
+        locations = new String[nodearray.length / 4];
+
+
+        locations[k] = nodearray[2];
+        k++;
+        locations[k] = nodearray[3];
+        k++;
+        nodearray[5] = nodearray[5].substring(0, (nodearray[5].length() - 9));
+        sb.append("You will begin your road trip by leaving "+ nodearray[1] +"\n");
+        sb.append("on "+ nodearray[5] +".\n");
+        sb.append("\n");
+
+int i = 0;
+        for(i = 8; i<nodearray.length-8; i++){
+            nodearray[i] = nodearray[i].substring(19, (nodearray[i].length() - 2));
+            nodearray[i+1] = nodearray[i+1].substring(23, (nodearray[i+1].length() - 1));
+            nodearray[i+4] = nodearray[i+4].substring(0, (nodearray[i+4].length() - 9));
+            nodearray[i+5] = nodearray[i+5].substring(0, (nodearray[i+5].length() - 9));
+
+            sb.append("Then travel to "+ nodearray[i] +",\n");
+            sb.append("a "+ nodearray[i+6] +" at "+ nodearray[i + 1]+".\n");
+            sb.append("You should arrive around "+ nodearray[i + 4] +",\n");
+            sb.append("and leave around "+ nodearray[i + 5] +".\n");
+
             locations[k] = nodearray[i+2];
             k++;
             locations[k] = nodearray[i+3];
             k++;
-            sb.append(nodearray[i+4] + "\n");
-            sb.append(nodearray[i+5] + "\n");
             sb.append("\n");
-            i = i + 5;
+            i = i + 7;
 
         }
+
+        locations[k] = nodearray[i+2];
+        k++;
+        locations[k] = nodearray[i+3];
+        k++;
+        nodearray[i+5] = nodearray[i+5].substring(0, (nodearray[i+5].length() - 9));
+        sb.append("You will finally arrive at your destination "+ nodearray[i+1] +"\n");
+        sb.append("on "+ nodearray[i+4] +".\n");
+        sb.append("\n");
+
+
+
+
         String route_output = sb.toString();
 
-        //String departure_time = extras.getString("EXTRA_MESSAGE2");
-        //String arrival_location = extras.getString("EXTRA_MESSAGE3");
-        //String arrival_time = extras.getString("EXTRA_MESSAGE4");
-        //String message5 = extras.getString("EXTRA_MESSAGE5");
 
 
-        //Traversal method called. Takes array/list of nodes as input and returns string / array of strings.
-        //These strings will be itinerary to be printed below for user. NOTE: Traversal.java not written yet. Below is just an example of how it would be called.
-        //Traversal traverse = new Traversal(Node[] nodelist);
-        //String[] results = traverse.resultsgen();
+
+
 
 
         //TextView objects created and then linked by ID to TextView sections denoted in xml file.
@@ -59,14 +90,11 @@ public class GeneratedRouteResults extends AppCompatActivity {
         TextView layout1 = (TextView) findViewById(R.id.full_route);
         layout1.setText(route_output);
         layout1.setMovementMethod(new ScrollingMovementMethod());
-        //TextView layout2 = (TextView) findViewById(R.id.departure_time);
-        //layout2.setText(departure_time);
-        //TextView layout3 = (TextView) findViewById(R.id.arrival_loc);
-        //layout3.setText(arrival_location);
-        //TextView layout4 = (TextView) findViewById(R.id.arrival_time);
-        //layout4.setText(arrival_time);
-        //TextView layout5 = (TextView) findViewById(R.id.randomlatlong);
-       // layout5.setText(message5);
+    }
+
+    public void GoBack2(View view){
+        setContentView(R.layout.activity_main);
+        finish();
     }
 
     //Method executed upon clicking Map View button.
@@ -75,15 +103,7 @@ public class GeneratedRouteResults extends AppCompatActivity {
         //intent method sets up new activity
         //Eventually will just pass along array/list of nodes (which include lats and longs) to display map.
         Intent intent = new Intent(this, MapsActivity.class);
-        //initializing TextView variables and linking them to TextView sections of xml file. Note: TextView displays text on screen.
-        //TextView dl = (TextView) findViewById(R.id.departure_loc);
-        //TextView al = (TextView) findViewById(R.id.arrival_loc);
-        //Grabs Text attribute from TextView sections of xml and casts them as Strings.
-        //String departure_location = dl.getText().toString();
-       // String arrival_location = al.getText().toString();
-        //Intent method used to pass variables along to next activity's onCreate method. Will eventually pass list/array of nodes.
-        //intent.putExtra("EXTRA_MESSAGE1", locations);
-        //intent.putExtra("EXTRA_MESSAGE3", arrival_location);
+        intent.putExtra("EXTRA_MESSAGE1", locations);
 
         startActivity(intent);
     }
